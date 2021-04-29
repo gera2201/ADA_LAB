@@ -1,33 +1,57 @@
 #include<stdio.h>
- 
-int linearser(int arr[], int l, int r, int x)
+#include <stdlib.h>
+#include <time.h>
+
+int RecursiveLS(int arr[], int value, int index, int n)
 {
-     if (r < l)
-        return -1;
-     if (arr[l] == x)
-        return l;
-     if (arr[r] == x)
-        return r;
-     return linearser(arr, l+1, r-1, x);
-}
+    int pos = 0;
+     for(long j = 0; j < 10000; j++);
  
+    if(index >= n)
+    {
+        return 0;
+    }
+ 
+    else if (arr[index] == value)
+    {
+        pos = index + 1;
+        return pos;
+    }
+ 
+    else
+    {
+        return RecursiveLS(arr, value, index+1, n);
+    }
+    return pos;
+}
 int main()
 {
-    int i,n,x;
-    printf("Enter size of Array\n");
-    scanf("%d",&n);
-    int arr[n];
-    printf("Enter the array elements\n");
-    for(i=0;i<n;i++)
-    {
-        scanf("%d",&arr[i]);
-    }
-    printf("Enter the Search Element\n");
+    clock_t start,end;
+    double timetaken;
+    start=clock();
+    int t,x,pos,low,high,position,swap;
+    printf("enter the no of elems you want to enter in the array\n");
+    scanf("%d",&t);
+    int arr[t];
+    for(int i=0;i<t;i++)
+    arr[i] = rand() % 100 + 1;
+    for(int i=0;i<t;i++)
+    printf("%d\n",arr[i]) ;
+    printf("Enter the elem to be searched\n");
     scanf("%d",&x);
-    int pos = linearser(arr, 0, n-1, x);
-    if (pos != -1)
-       printf("Element %d is present at position %d", x, pos+1);
+    start=clock();
+    printf("\n----------LINEAR SEARCH-----------\n");
+    pos =  RecursiveLS(arr, x, 0, t);
+    if (pos != 0)
+    {
+        printf("Element found at pos %d ", pos);
+    }
     else
-        printf("Element %d is not present", x);
+    {
+        printf("Element not found");
+    }
+    end=clock();
+    timetaken=((double)(end-start))/CLOCKS_PER_SEC;
+    printf("\ntime taken = %f",timetaken);
     return 0;
 }
