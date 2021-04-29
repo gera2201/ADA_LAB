@@ -1,45 +1,67 @@
-#include <stdio.h>
-int binsearch(int arr[], int l, int r, int x)
-{
-    if (r >= l) 
-    {
-        int mid = l + (r - l) / 2;
-        if (arr[mid] == x)
-            return mid;
- 
-        if (arr[mid] > x)
-            return binsearch(arr, l, mid - 1, x);
-            
-        else
-        return binsearch(arr, mid + 1, r, x);
-    }
-    return -1;
+#include<stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+
+
+int RecursiveBS(int a[], int x, int low, int high) {
+int mid,swap;
+    if (high >= low){
+       mid = low + (high - low)/2;
+      if (a[mid] == x)
+         return mid;
+      if (a[mid] > x)
+         return RecursiveBS(a,x, low, mid-1);
+      if(a[mid]<x)
+      return RecursiveBS(a,x, mid+1, high);
+   }
+   return -1;
 }
-  
- 
 int main()
 {
-    int n,ele,r;
-    printf("Enter Array Size\n");
-    scanf("%d",&n);
-    int arr[n];
-    printf("Enter array elements\n");
-    for(int i=0;i<n;i++)
+    clock_t start,end;
+    double timetaken;
+    start=clock();
+    int t,x,pos,low,high,position,a[100],swap;
+    printf("enter the no of elems you want to enter in the array\n");
+    scanf("%d",&t);
+    int arr[t],a[t];
+    for(int i=0;i<t;i++)
+    arr[i] = rand() % 100 + 1;
+    for(int i=0;i<t;i++)
+    printf("%d\n",arr[i]) ;
+    printf("Enter the elem to be searched\n");
+    scanf("%d",&x);
+    printf("\n----------BINARY SEARCH-----------\n");
+    low = 0;
+    high = t - 1;
+    for(int i=0;i<t;i++)
+    a[i]=arr[i];
+    for(int i = 0 ; i < t-1; i++)
     {
-        scanf("%d",&arr[i]);
-    }
-    
-
-
-    printf("Enter Search Element\n");
-    scanf("%d",&ele);
-    r = binsearch(arr,0, n, ele);
-    if(r==-1)
-    printf("Not Found\n");
-    else
+    for(int j = 0 ; j < t-i-1; j++)
     {
-        printf("Element found at position %d\n",r+1);
-        printf("Search Complete\n");
+    if(a[j] > a[j+1]) 
+    {
+    swap=a[j];
+    a[j]=a[j+1];
+    a[j+1]=swap;
     }
+    }
+    }
+    printf("array after sorting\n");
+    for(int i=0;i<t;i++)
+    printf("%d\n",a[i]);
+    printf("\n");
+     start=clock();
+    position = RecursiveBS(a, x, low, high);
+    if (position != -1) {
+    printf("\nNumber present at %d", (position + 1));
+    } else
+    printf("\n The number is not present in the list");
+    end=clock();
+    timetaken=((double)(end-start))/CLOCKS_PER_SEC;
+    printf("\ntime taken = %f",timetaken);
+
     return 0;
 }
