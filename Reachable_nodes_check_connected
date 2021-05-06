@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<conio.h>
+int a[20][20],q[20],visited[20],n,i,j,f=0,r=-1,reach[20];
+void bfs(int v)
+{
+    for(i=1;i<=n;i++)
+    if(a[v][i] && !visited[i])
+    q[++r]=i;
+    if(f<=r)
+    {
+        visited[q[f]]=1;
+        bfs(q[f++]);
+    }
+}
+
+void dfs(int x)
+{
+    int i;
+    reach[x]=1;
+    for(i=1;i<=n;i++)
+    {
+        if(a[x][i] && !reach[i])
+        {
+            printf("\n %d->%d",x,i);
+            dfs(i);
+        }
+    }
+}
+
+
+int main()
+{
+    int v,count=0;
+    printf("Enter the number of vertices\n");
+    scanf("%d",&n);
+    for(i=1;i<=n;i++)
+    {
+        q[i]=0;
+        visited[i]=0;
+    }
+    printf("Enter graph data in matrix form:\n");
+    for(i=1;i<=n;i++)
+    {
+        printf("Enter row %d\n",i);
+        for(j=1;j<=n;j++)
+        {
+            scanf("%d",&a[i][j]);
+        }
+    }
+    printf("Enter the starting vertex\n");
+    scanf("%d",&v);
+    bfs(v);
+    printf("The node which are reachable are:\n");
+    for(i=1;i<=n;i++)
+    {
+        if(visited[i])
+        printf("%d\t",i);
+    }
+    
+    dfs(1);
+    printf("\n");
+    for(i=1;i<=n;i++)
+    {
+        if(reach[i])
+        count++;
+    }
+    if(count==n)
+    printf("\n Graph is connected");
+    else
+    printf("\n Graph is not connected");
+
+    return 0;
+}
