@@ -1,0 +1,67 @@
+#include <stdio.h>
+int merge_median(int x[], int y[], int n)
+{
+    int i=0,j=0,c,r=-1;
+    int m=-1, p=-1;
+    int arr[100];
+    for (c=0;c<n+1;c++)
+    {
+        if(i==n)
+        {
+            m=p;
+            p=y[0];
+            break;
+        }
+        else if(j==n)
+        {
+            m=p;
+            p=x[0];
+            break;
+        }
+        if(x[i]<=y[j])
+        {
+            m=p; 
+            p=x[i];
+            i++;
+            arr[++r]=p;
+        }
+        else
+        {
+            m=p;  
+            p=y[j];
+            j++;
+            arr[++r]=p;
+        }
+    }
+    printf("Sorted Array\n");
+    for(int k=0;k<n+n;k++)
+    {
+        printf("%d\t",arr[k]);
+    }
+    printf("\n");
+    return (m+p)/2;
+}
+ 
+int main()
+{
+    int n;
+    printf("Enter Size 0f Arrays:");
+    scanf("%d",&n);
+    int x[n],y[n];
+    printf("Enter Elements of array 1\n");
+    for(int i=0;i<n;i++)
+    {
+        printf("Element %d:",(i+1));
+        scanf("%d",&x[i]);
+    }
+    printf("Enter Elements of array 2\n");
+    for(int i=0;i<n;i++)
+    {
+        printf("Element %d:",(i+1));
+        scanf("%d",&y[i]);
+    }
+    
+    int m=merge_median(x,y,n);
+    printf("Median is %d",m);
+    return 0;
+}
